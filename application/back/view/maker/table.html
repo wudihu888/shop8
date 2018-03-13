@@ -38,7 +38,7 @@
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="input-table">表名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" id ="table" name="table" value="" placeholder="表名(不含前缀)" id="input-table" class="form-control" />
+                                    <input type="text" name="table" value="" placeholder="表名(不含前缀)" id="input-table" class="form-control" />
                                 </div>
                             </div>
 
@@ -80,62 +80,68 @@
 
 <script>
 
-    var urlTableInfo = '{:url("info")}';
+    
+    var urlTtableInfo = '{:url("info")}';
 </script>
 
 <!--获取表信息-->
 <script>
-    $(function() {
-        $('#button-info').click(function(evt) {
-            evt.preventDefault();// 阻止默认事件
-            var url = urlTableInfo;
-            var data = {
-                table: $('#input-table').val()
-            };
-            // 发出ajax请求
-            $.get(url, data, function(resp) {
-                // 将表comment信息, 放入指定的位置
-                $('#input-comment').val(resp.comment);
-                // $.each jquery提供的遍历数组(对象)的方法
-                // 参数1, 需要遍历的数组(对象)
-                // 参数2, 遍历时执行的函数, i, 索引号, field, 每个遍历的数据
-                $.each(resp.fields, function(i, field) {
-                    html += '<div class="form-group">' +
-                            '<div class="col-sm-2"></div>' +
-                            '<div class="col-sm-2">' +
-                            '<input type="text" name="fields['+i+'][name]" value="'+field.column_name+'" class="form-control" readonly/>' +
-                            '</div>' +
-                            '<div class="col-sm-2">' +
-                            '<input type="text" name="fields['+i+'][comment]" value="'+field.column_comment+'" placeholder="ID" class="form-control"/>' +
-                            '</div>' +
-                            '<div class="col-sm-2">' +
-                            '<input type="checkbox" name="fields['+i+'][is_list]" value="1" class="form-control" '+ (field.column_name=='create_time' || field.column_name=='update_time' ? '' : 'checked') + '/>' +
-                            '</div>' +
-                            '<div class="col-sm-2">' +
-                            '<input type="checkbox" name="fields['+i+'][is_order]" value="1" class="form-control" '+ (field.column_name=='create_time' || field.column_name=='update_time' ? '' : 'checked') + '/>' +
-                            '</div>' +
-                            '<div class="col-sm-2">' +
-                            '<input type="checkbox" name="fields['+i+'][is_set]" value="1" class="form-control" '+ (field.column_name=='create_time' || field.column_name=='update_time' || field.column_name=='id' ? '' : 'checked') + '/>' +
-                            '</div>' +
-                            '</div>';
-                });
-                // 追加到表单
-                $('div.tab-content').append(html);
-            }, 'json');
-        });
-    })
+    $('#button-info').click(function(evt){
+        evt.preventDefault();
+        var url = urlTtableInfo;
+       
+        var data = {
+            table:$('#input-table').val()
+        };
+        $.get(url,data,function(resp){
+           $('#input-comment').val(resp.comment);
+        },'json');
+       
+    });
 
-    // $('#button-info').click(function(event){
-    //     event.preventDefault();
-      
-    //    var data = {table:$('#table').val()};
-    //    var url = urlTableInfo;
-    //    $.get(url,data,function(d){
-    //        alert(d);
-    //    },'json') 
-        
 
-    // });
+
+    // $(function() {
+    //     $('#button-info').click(function(evt) {
+    //         evt.preventDefault();// 阻止默认事件
+    //         var url = urlTableInfo;
+    //         var data = {
+    //             table: $('#input-table').val()
+    //         };
+    //         // 发出ajax请求
+    //         $.get(url, data, function(resp) {
+    //             // 将表comment信息, 放入指定的位置
+    //             $('#input-comment').val(resp.comment);
+    //             // $.each jquery提供的遍历数组(对象)的方法
+    //             // 参数1, 需要遍历的数组(对象)
+    //             // 参数2, 遍历时执行的函数, i, 索引号, field, 每个遍历的数据
+    //             $.each(resp.fields, function(i, field) {
+    //                 html += '<div class="form-group">' +
+    //                         '<div class="col-sm-2"></div>' +
+    //                         '<div class="col-sm-2">' +
+    //                         '<input type="text" name="fields['+i+'][name]" value="'+field.column_name+'" class="form-control" readonly/>' +
+    //                         '</div>' +
+    //                         '<div class="col-sm-2">' +
+    //                         '<input type="text" name="fields['+i+'][comment]" value="'+field.column_comment+'" placeholder="ID" class="form-control"/>' +
+    //                         '</div>' +
+    //                         '<div class="col-sm-2">' +
+    //                         '<input type="checkbox" name="fields['+i+'][is_list]" value="1" class="form-control" '+ (field.column_name=='create_time' || field.column_name=='update_time' ? '' : 'checked') + '/>' +
+    //                         '</div>' +
+    //                         '<div class="col-sm-2">' +
+    //                         '<input type="checkbox" name="fields['+i+'][is_order]" value="1" class="form-control" '+ (field.column_name=='create_time' || field.column_name=='update_time' ? '' : 'checked') + '/>' +
+    //                         '</div>' +
+    //                         '<div class="col-sm-2">' +
+    //                         '<input type="checkbox" name="fields['+i+'][is_set]" value="1" class="form-control" '+ (field.column_name=='create_time' || field.column_name=='update_time' || field.column_name=='id' ? '' : 'checked') + '/>' +
+    //                         '</div>' +
+    //                         '</div>';
+    //             });
+    //             // 追加到表单
+    //             $('div.tab-content').append(html);
+    //         }, 'json');
+    //     });
+    // })
+
+   
 </script>
 </body>
 </html>
